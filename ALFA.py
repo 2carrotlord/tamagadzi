@@ -176,7 +176,8 @@ def voda():
 #špína
 def spina():
     global counter_spina 
-    counter_spina -= 10
+    if counter_spina > 0 and counter_spina < 100:
+        counter_spina -= 10
 
 paused = True
 
@@ -203,6 +204,7 @@ while run:
                 play_time = random.randint(1,50)
                 if play_time == 1:
                     pridat_odpad()
+                    
                 counter_hlad -=1
                 text_hlad_cislo = str(counter_hlad)
                 if counter_hlad <= 0:
@@ -211,6 +213,7 @@ while run:
                 if counter_hlad > 100:
                     text_hlad_cislo = "překrmen"
                     run = False
+                
                 counter_voda -=1
                 text_voda_cislo = str(counter_voda)
                 if counter_voda <= 0:
@@ -219,6 +222,10 @@ while run:
                 if counter_voda > 100:
                     text_voda_cislo = "prasknul"
                     run = False
+                    
+                if counter_spina > 100:
+                    run = False
+            
             if action.type == pygame.QUIT:
                 run = False
 
@@ -250,6 +257,9 @@ while run:
             obrazovka.blit(voda_stav_2, (180,0))
         elif counter_voda <= 50:
             obrazovka.blit(voda_stav_3, (180,0))
+    #statistika špíny, obrázek špíny
+        if counter_spina > 100:
+            
 
     #text čísla pro vodu, jídlo, špína 
         obrazovka.blit(font.render(text_hlad_cislo, True,(0,0,0)), (85,60))
