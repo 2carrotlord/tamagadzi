@@ -6,6 +6,14 @@ import time
 import random
 
 '''
+https://ibb.co/4R0bpng4
+https://ibb.co/84b1mBW3
+https://ibb.co/JFQtPnm7
+https://ibb.co/kVkxtpMz
+https://ibb.co/LdJgzmDF
+'''
+
+'''
 #https://ibb.co/nNMfzTG8
 https://ibb.co/JRL0t5hy
 https://ibb.co/F4kJDSDJ
