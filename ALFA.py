@@ -5,33 +5,6 @@ import sys
 import time
 import random
 
-'''
-https://ibb.co/4R0bpng4
-https://ibb.co/84b1mBW3
-https://ibb.co/JFQtPnm7
-https://ibb.co/kVkxtpMz
-https://ibb.co/LdJgzmDF
-'''
-
-#https://ibb.co/vFxqNwn
-'''
-#https://ibb.co/nNMfzTG8
-https://ibb.co/JRL0t5hy
-https://ibb.co/F4kJDSDJ
-https://ibb.co/W4m5KsfV
-https://ibb.co/79K7FNw
-https://ibb.co/Fkd4QX36
-https://ibb.co/FbhMSHN9
-https://ibb.co/dwt87PZG
-https://ibb.co/FbXXZ8TQ
-https://ibb.co/PGjvVctk
-https://ibb.co/Yqhbp8r
-https://ibb.co/5hTgmgLR
-https://ibb.co/dwNYdwqJ
-https://ibb.co/RGmPPz5M
-https://ibb.co/spfF10Vr
-'''
-
 #obrazovka
 pygame.init()
 obrazovka = pygame.display.set_mode((300,420))
@@ -39,7 +12,7 @@ pygame.display.set_caption("Tamogatchi")
 
 #čas
 cas = pygame.time.Clock()
-pygame.time.set_timer(pygame.USEREVENT, 200)
+pygame.time.set_timer(pygame.USEREVENT, 100)
 play_time = 0
 
 #fonty
@@ -52,20 +25,40 @@ Slozka_s_obrazky_staty = os.path.join(CESTA_K_KODU, "obrazky_staty")
 Slozka_s_obrazky_mazlicek = os.path.join(CESTA_K_KODU, "obrazky_mazliček")
 
 #jídlo
-hunger_obrazek_1 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger_1.png")).convert_alpha()
+hunger_obrazek_1 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger1.png")).convert_alpha()
 hunger_stav_1 = pygame.transform.scale(hunger_obrazek_1, (40,40))
-hunger_obrazek_2 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger_2.png")).convert_alpha()
+hunger_obrazek_2 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger2.png")).convert_alpha()
 hunger_stav_2 = pygame.transform.scale(hunger_obrazek_2, (40,40))
-hunger_obrazek_3 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger_3.png")).convert_alpha()
+hunger_obrazek_3 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger3.png")).convert_alpha()
 hunger_stav_3 = pygame.transform.scale(hunger_obrazek_3, (40,40))
+hunger_obrazek_4 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger4.png")).convert_alpha()
+hunger_stav_4 = pygame.transform.scale(hunger_obrazek_4, (40,40))
+hunger_obrazek_5 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger5.png")).convert_alpha()
+hunger_stav_5 = pygame.transform.scale(hunger_obrazek_5, (40,40))
 
 #voda
-voda_obrazek_1 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "voda_1.png")).convert_alpha()
+voda_obrazek_1 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water1.png")).convert_alpha()
 voda_stav_1 = pygame.transform.scale(voda_obrazek_1, (40,40))
-voda_obrazek_2 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "voda_2.png")).convert_alpha()
+voda_obrazek_2 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water2.png")).convert_alpha()
 voda_stav_2 = pygame.transform.scale(voda_obrazek_2, (40,40))
-voda_obrazek_3 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "voda_3.png")).convert_alpha()
+voda_obrazek_3 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water3.png")).convert_alpha()
 voda_stav_3 = pygame.transform.scale(voda_obrazek_3, (40,40))
+voda_obrazek_4 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water4.png")).convert_alpha()
+voda_stav_4 = pygame.transform.scale(voda_obrazek_4, (40,40))
+voda_obrazek_5 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water5.png")).convert_alpha()
+voda_stav_5 = pygame.transform.scale(voda_obrazek_5, (40,40))
+
+#odpadky
+odpad_obrazek_1 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt1.png")).convert_alpha()
+odpad_stav_1 = pygame.transform.scale(odpad_obrazek_1, (40,40))
+odpad_obrazek_2 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt2.png")).convert_alpha()
+odpad_stav_2 = pygame.transform.scale(odpad_obrazek_2, (40,40))
+odpad_obrazek_3 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt3.png")).convert_alpha()
+odpad_stav_3 = pygame.transform.scale(odpad_obrazek_3, (40,40))
+odpad_obrazek_4 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt4.png")).convert_alpha()
+odpad_stav_4 = pygame.transform.scale(odpad_obrazek_4, (40,40))
+odpad_obrazek_5 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt5.png")).convert_alpha()
+odpad_stav_5 = pygame.transform.scale(odpad_obrazek_5, (40,40))
 
 
 #staty
@@ -249,7 +242,8 @@ while run:
                 if counter_voda > 100:
                     text_voda_cislo = "prasknul"
                     run = False
-                    
+
+                counter_spina += 1
                 if counter_spina > 100:
                     run = False
             
@@ -273,20 +267,38 @@ while run:
     #statistika hladu, obrázek hladu
         if counter_hlad >= 80:
             obrazovka.blit(hunger_stav_1, (80,0))
-        elif counter_hlad <= 80 and counter_hlad >= 50:
+        elif counter_hlad <= 80 and counter_hlad > 60:
             obrazovka.blit(hunger_stav_2, (80,0))
-        elif counter_hlad <= 50:
+        elif counter_hlad <= 60 and counter_hlad > 40:
             obrazovka.blit(hunger_stav_3, (80,0))
+        elif counter_hlad <= 40 and counter_hlad > 20:
+            obrazovka.blit(hunger_stav_4, (80,0))
+        elif counter_hlad <= 20:
+            obrazovka.blit(hunger_stav_5, (80,0))
+
     #statistika vody, obrázek vody        
         if counter_voda >= 80:
             obrazovka.blit(voda_stav_1, (180,0))
-        elif counter_voda <= 80 and counter_voda >= 50:
+        elif counter_voda <= 80 and counter_hlad > 60:
             obrazovka.blit(voda_stav_2, (180,0))
-        elif counter_voda <= 50:
+        elif counter_voda <= 60 and counter_hlad > 40:
             obrazovka.blit(voda_stav_3, (180,0))
+        elif counter_voda <= 40 and counter_hlad > 20:
+            obrazovka.blit(voda_stav_4, (180,0))
+        elif counter_voda <= 20:
+            obrazovka.blit(voda_stav_5, (180,0))
+
     #statistika špíny, obrázek špíny
-        if counter_spina > 100:
-            
+        if counter_spina <= 20:
+            obrazovka.blit(odpad_stav_1, (72, 350))
+        elif counter_spina >= 20 and counter_spina <= 40:
+            obrazovka.blit(odpad_stav_2, (72, 350))
+        elif counter_spina >= 40 and counter_spina <= 60:
+            obrazovka.blit(odpad_stav_3, (72, 350))
+        elif counter_spina >= 60 and counter_spina <= 80:
+            obrazovka.blit(odpad_stav_4, (72, 350))
+        elif counter_spina >= 80:
+            obrazovka.blit(odpad_stav_5, (72, 350))
 
     #text čísla pro vodu, jídlo, špína 
         obrazovka.blit(font.render(text_hlad_cislo, True,(0,0,0)), (85,60))
