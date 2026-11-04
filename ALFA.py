@@ -5,6 +5,35 @@ import sys
 import time
 import random
 
+'''
+https://ibb.co/4R0bpng4
+https://ibb.co/84b1mBW3
+https://ibb.co/JFQtPnm7
+https://ibb.co/kVkxtpMz
+https://ibb.co/LdJgzmDF
+'''
+
+'''
+https://ibb.co/vFxqNwn
+#https://ibb.co/nNMfzTG8
+https://ibb.co/JRL0t5hy
+https://ibb.co/F4kJDSDJ
+https://ibb.co/W4m5KsfV
+https://ibb.co/79K7FNw
+https://ibb.co/Fkd4QX36
+https://ibb.co/FbhMSHN9
+https://ibb.co/dwt87PZG
+https://ibb.co/FbXXZ8TQ
+https://ibb.co/PGjvVctk
+https://ibb.co/Yqhbp8r
+https://ibb.co/5hTgmgLR
+https://ibb.co/dwNYdwqJ
+https://ibb.co/RGmPPz5M
+https://ibb.co/spfF10Vr
+'''
+
+
+
 #obrazovka
 pygame.init()
 obrazovka = pygame.display.set_mode((300,420))
