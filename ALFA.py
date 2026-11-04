@@ -89,6 +89,9 @@ odpad_stav_4 = pygame.transform.scale(odpad_obrazek_4, (40,40))
 odpad_obrazek_5 = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt5.png")).convert_alpha()
 odpad_stav_5 = pygame.transform.scale(odpad_obrazek_5, (40,40))
 
+#bobek
+randomtrash = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "bobek.png")).convert_alpha()
+randomtrash = pygame.transform.scale(randomtrash, (20,20))
 
 #staty
 counter_hlad = 100
