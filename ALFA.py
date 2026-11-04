@@ -270,3 +270,5 @@ while run:
 
 pygame.quit()
 sys.exit()
+
+#anca je gae
