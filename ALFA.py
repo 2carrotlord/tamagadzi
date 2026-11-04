@@ -74,6 +74,13 @@ odpad_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_ob
 odpad_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt4.png")).convert_alpha(), (40,40))
 odpad_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt5.png")).convert_alpha(), (40,40))
 
+#zábava
+zabava_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy1.png")).convert_alpha(), (40,40))
+zabava_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy2.png")).convert_alpha(), (40,40))
+zabava_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy3.png")).convert_alpha(), (40,40))
+zabava_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy4.png")).convert_alpha(), (40,40))
+zabava_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy5.png")).convert_alpha(), (40,40))
+
 #bobek
 randomtrash = pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "bobek.png")).convert_alpha()
 randomtrash = pygame.transform.scale(randomtrash, (20,20))
@@ -91,7 +98,9 @@ counter_spina = 0
 text_spina_cislo = "0"
 spina_text = font.render("špína", True, (0,0,0))
 
-
+counter_zabava = 0
+text_zabava_cislo = "0"
+zabava_text = font.render("Zábava", True, (0,0,0))
 
 #odpad
 odpadky = []
@@ -235,13 +244,14 @@ while run:
     obrazovka.fill ((255,255,255))
     text_spina_cislo = str(counter_spina) 
     for action in pygame.event.get():
-    #měřič jídla a vody
+    #měřiče
         if paused:
             if action.type == pygame.USEREVENT:
                 play_time = random.randint(1,50)
                 if play_time == 1:
                     pridat_odpad()
                     
+                #měřič hladu 
                 counter_hlad -=1
                 text_hlad_cislo = str(counter_hlad)
                 if counter_hlad <= 0:
@@ -250,7 +260,8 @@ while run:
                 if counter_hlad > 100:
                     text_hlad_cislo = "překrmen"
                     run = False
-                
+                    
+                #měřič vody                
                 counter_voda -=1
                 text_voda_cislo = str(counter_voda)
                 if counter_voda <= 0:
@@ -259,11 +270,14 @@ while run:
                 if counter_voda > 100:
                     text_voda_cislo = "prasknul"
                     run = False
-
+                    
+                #měřič špíny
                 counter_spina += 1
                 if counter_spina > 100:
                     run = False
-            
+                    
+                #měřič zábavy
+                
             if action.type == pygame.QUIT:
                 run = False
 
