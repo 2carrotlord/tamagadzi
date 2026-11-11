@@ -215,13 +215,15 @@ Button(160, 285, 120, 30, "MINIHRY", stop, cooldown = 1000)
 
 run = True
 while run:
+    obrazovka.fill ((255,255,255))
     for action in pygame.event.get():
-        obrazovka.fill ((255,255,255))
+        if action.type == pygame.QUIT:
+            run = False
+
     #hlavní hra
-        if not Minihry:
+        elif not Minihry:
             if action.type == pygame.USEREVENT:
-                play_time = random.randint(1,50)
-                if play_time == 1:
+                if random.randint(1,50) == 1:
                     pridat_odpad()
                 
                 counter_hlad -=1
@@ -260,12 +262,6 @@ while run:
                             counter_spina += 10                      
                             odpadky.remove((odpad, odpad_rect))
                             break
-            
-            for odpad, odpad_rect in odpadky:
-                obrazovka.blit(odpad, odpad_rect)
-            if len(odpadky) > 10:
-                print ("moc odpadků")
-                run = False
 
             #reakce 
             elif action.type == pygame.MOUSEBUTTONDOWN:
@@ -274,48 +270,59 @@ while run:
                         if sprite.rect.collidepoint(action.pos):
                             counter_zabava += 1
                             break
+
+    if len(odpadky) > 10:
+        print ("moc odpadků")
+        run = False
+
+
+    if not Minihry:
+        #obrazek bobku
+        for odpad, odpad_rect in odpadky:
+            obrazovka.blit(odpad, odpad_rect)
+
         #update animace
-            vsichni_spritove.update()
-            vsichni_spritove.draw(obrazovka)
-        #statistika hladu, obrázek hladu
-            index_hlad = min(counter_hlad // 20, 4)
-            obrazovka.blit(hunger_stav[index_hlad], (80,0))
+        vsichni_spritove.update()
+        vsichni_spritove.draw(obrazovka)
 
-        #statistika vody, obrázek vody        
-            index_voda = min(counter_voda // 20, 4)
-            obrazovka.blit(voda_stav[index_voda], (180,0))
+    #statistika hladu, obrázek hladu
+        index_hlad = min(counter_hlad // 20, 4)
+        obrazovka.blit(hunger_stav[index_hlad], (80,0))
 
-        #statistika špíny, obrázek špíny
-            index_spina = min(counter_spina // 20, 4)
-            obrazovka.blit(spina_stav[index_spina], (72, 355))
+    #statistika vody, obrázek vody        
+        index_voda = min(counter_voda // 20, 4)
+        obrazovka.blit(voda_stav[index_voda], (180,0))
 
-        #statistika zábavy, obrázek zábavy
-            index_zabava = min(counter_zabava // 20, 4)
-            obrazovka.blit(zabava_stav[index_zabava], (180, 355))
+    #statistika špíny, obrázek špíny
+        index_spina = min(counter_spina // 20, 4)
+        obrazovka.blit(spina_stav[index_spina], (72, 355))
 
-        #text čísla pro vodu, jídlo, špína 
-            obrazovka.blit(font.render(text_hlad_cislo, True,(0,0,0)), (85,60))
-            obrazovka.blit(font.render(text_voda_cislo, True,(0,0,0)), (185,60))
-            obrazovka.blit(font.render(text_spina_cislo, True,(0,0,0)), (80,315))
-            obrazovka.blit(font.render(text_zabava_cislo, True,(0,0,0)), (190,315))
-            
-        #text jídla, vody, špíny 
-            obrazovka.blit(hlad_text, (75,40))
-            obrazovka.blit(voda_text, (175,40))
-            obrazovka.blit(spina_text,(62,335))
-            obrazovka.blit(zabava_text,(175,335))
+    #statistika zábavy, obrázek zábavy
+        index_zabava = min(counter_zabava // 20, 4)
+        obrazovka.blit(zabava_stav[index_zabava], (180, 355))
+
+    #text čísla pro vodu, jídlo, špína 
+        obrazovka.blit(font.render(text_hlad_cislo, True,(0,0,0)), (85,60))
+        obrazovka.blit(font.render(text_voda_cislo, True,(0,0,0)), (185,60))
+        obrazovka.blit(font.render(text_spina_cislo, True,(0,0,0)), (80,315))
+        obrazovka.blit(font.render(text_zabava_cislo, True,(0,0,0)), (190,315))
+        
+    #text jídla, vody, špíny 
+        obrazovka.blit(hlad_text, (75,40))
+        obrazovka.blit(voda_text, (175,40))
+        obrazovka.blit(spina_text,(62,335))
+        obrazovka.blit(zabava_text,(175,335))
 
     #minihry
 
     #update tlačítka 
-        for object in objects:
-            object.process()
+    for object in objects:
+        object.process()
 
     #nastaveni
-        pygame.display.flip()
-        cas.tick(60)
-        if action.type == pygame.QUIT:
-            run = False
+    pygame.display.flip()
+    cas.tick(60)
     pygame.display.set_caption(f"Tamogatchi | FPS: {int(cas.get_fps())}")
+
 pygame.quit()
-sys.exit()
+sys.exit() 
