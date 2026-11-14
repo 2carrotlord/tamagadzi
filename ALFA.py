@@ -154,34 +154,35 @@ class Button():
         objects.append(self)
 
     #animace tlačítka 
-    def process(self):
-        mousePos = pygame.mouse.get_pos()
-        currentTime = pygame.time.get_ticks()
-        isOnCooldown = (currentTime - self.lastClickTime) < self.cooldown
-        if isOnCooldown:
-            self.buttonSurface.fill(self.fillColors['cooldown'])
-        else:
-            self.buttonSurface.fill(self.fillColors['normal'])
-            if self.buttonRect.collidepoint(mousePos):
-                self.buttonSurface.fill(self.fillColors['hover'])
-                if pygame.mouse.get_pressed(num_buttons=3)[0]:
-                    self.buttonSurface.fill(self.fillColors['pressed'])
-                    if not self.alreadyPressed:
-                        if self.onclickFunction:
-                            self.onclickFunction()
-                        self.alreadyPressed = True
-                        self.lastClickTime = currentTime
+    def process(self):       
+        if self.aktivni:
+            mousePos = pygame.mouse.get_pos()
+            currentTime = pygame.time.get_ticks()
+            isOnCooldown = (currentTime - self.lastClickTime) < self.cooldown
+            if isOnCooldown:
+                self.buttonSurface.fill(self.fillColors['cooldown'])
+            else:
+                self.buttonSurface.fill(self.fillColors['normal'])
+                if self.buttonRect.collidepoint(mousePos):
+                    self.buttonSurface.fill(self.fillColors['hover'])
+                    if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                        self.buttonSurface.fill(self.fillColors['pressed'])
+                        if not self.alreadyPressed:
+                            if self.onclickFunction:
+                                self.onclickFunction()
+                            self.alreadyPressed = True
+                            self.lastClickTime = currentTime
+                        else:
+                            self.alreadyPressed = False
                     else:
                         self.alreadyPressed = False
-                else:
-                    self.alreadyPressed = False
-
-        self.buttonSurf = font_button.render(self.buttonText, True, (20,20,20))
-        self.buttonSurface.blit(self.buttonSurf, [
-            self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2,
-            self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2
-        ])
-        obrazovka.blit(self.buttonSurface, self.buttonRect)
+    
+            self.buttonSurf = font_button.render(self.buttonText, True, (20,20,20))
+            self.buttonSurface.blit(self.buttonSurf, [
+                self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2,
+                self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2
+            ])
+            obrazovka.blit(self.buttonSurface, self.buttonRect)
 
 #jidlo
 def jidlo():
@@ -207,6 +208,9 @@ Minihry = False
 def stop():
     global Minihry
     Minihry = not Minihry
+    hlad_tlacitko.aktivni = not hlad_tlacitko.aktivni
+    voda_tlacitko.aktivni = not voda_tlacitko.aktivni
+    uklidit_tlacitko.aktivni = not uklidit_tlacitko.aktivni
 
 #zabava
 def zabava():
@@ -215,10 +219,10 @@ def zabava():
         counter_zabava += 2
 
 #tlačítka 
-Button(55, 80, 80, 30, "Hlad", jidlo, cooldown = 1000)
-Button(160, 80, 80, 30, "Voda", voda, cooldown = 1000)
-Button(30, 285, 120, 30, "Uklidit", uklidit, cooldown = 1000)
-Button(160, 285, 120, 30, "MINIHRY", stop, cooldown = 1000)
+hlad_tlacitko = Button(55, 80, 80, 30, "Hlad", jidlo, cooldown = 1000)
+voda_tlacitko = Button(160, 80, 80, 30, "Voda", voda, cooldown = 1000)
+uklidit_tlacitko = Button(30, 285, 120, 30, "Uklidit", uklidit, cooldown = 1000)
+minihry_tlacitko = Button(160, 285, 120, 30, "MINIHRY", stop, cooldown = 1000)
 
 run = True
 while run:
