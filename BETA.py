@@ -10,7 +10,7 @@ obrazovka = pygame.display.set_mode((300,420))
 
 #čas
 cas = pygame.time.Clock()
-pygame.time.set_timer(pygame.USEREVENT, 100) #1000
+pygame.time.set_timer(pygame.USEREVENT, 1000)
 play_time = 0
 
 #fonty
