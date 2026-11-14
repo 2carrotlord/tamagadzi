@@ -10,7 +10,7 @@ obrazovka = pygame.display.set_mode((300,420))
 
 #čas
 cas = pygame.time.Clock()
-pygame.time.set_timer(pygame.USEREVENT, 1000)
+pygame.time.set_timer(pygame.USEREVENT, 100) #1000
 play_time = 0
 
 #fonty
@@ -73,6 +73,8 @@ spina_text = font.render("špína", True, (0,0,0))
 counter_zabava = 100
 text_zabava_cislo = "100"
 zabava_text = font.render("zábava", True, (0,0,0))
+
+death = ""
 
 
 #odpad
@@ -231,27 +233,33 @@ while run:
                 if counter_hlad <= 0:
                     text_hlad_cislo = "umřel"
                     run = False
+                    death = "vyhladověl"
                 if counter_hlad > 100:
                     text_hlad_cislo = "překrmen"
                     run = False
+                    death = "překrmen"
                 
                 counter_voda -=1
                 text_voda_cislo = str(counter_voda)
                 if counter_voda <= 0:
                     text_voda_cislo = "umřel"
                     run = False
+                    death = "dehydratace"
                 if counter_voda > 100:
                     text_voda_cislo = "prasknul"
                     run = False
+                    death = "prasknul"
 
                 counter_spina += 1
                 if counter_spina > 100:
                     run = False
+                    death = "zardousen špínou"
 
                 counter_zabava -= 1
                 text_zabava_cislo = str(counter_zabava)
                 if counter_zabava < 0:
                     run = False
+                    death = "unuděn k smrti"
 
             #odpad
                 text_spina_cislo = str(counter_spina)
@@ -274,6 +282,7 @@ while run:
     if len(odpadky) > 10:
         print ("moc odpadků")
         run = False
+        death = "zadušen odpadem"
 
 
     if not Minihry:
@@ -323,6 +332,14 @@ while run:
     pygame.display.flip()
     cas.tick(60)
     pygame.display.set_caption(f"Tamogatchi | FPS: {int(cas.get_fps())}")
+
+#deathscreen
+if death != "":
+    obrazovka.fill((255,20,20))
+    obrazovka.blit(font.render("MAZLÍK UMŘEL", True,(0,0,0)), (80,50))
+    obrazovka.blit(font.render(f"Důvod: {death}", True,(0,0,0)), (15,80))
+    pygame.display.flip() 
+    pygame.time.wait(3000)
 
 pygame.quit()
 sys.exit() 
