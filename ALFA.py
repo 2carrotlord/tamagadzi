@@ -16,6 +16,7 @@ play_time = 0
 #fonty
 font = pygame.font.SysFont("Consolas", 20)
 font_button = pygame.font.SysFont("Consolas", 30)
+font_reakce = pygame.font.SysFont("Consolas", 15)
 
 #Načítání obrázků 
 CESTA_K_KODU = os.path.dirname(os.path.abspath(__file__))
@@ -57,6 +58,9 @@ zabava_stav = [zabava_stav_5, zabava_stav_4, zabava_stav_3, zabava_stav_2, zabav
 #bobek
 bobek_obrazek = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "bobek.png")).convert_alpha(), (20,20))
 
+#interakce 
+interakce = ""
+reakce = ["ahoj :3", "error 404", "meow meow", "kňááá", "HUH?", "mám hlad"]
 #staty
 counter_hlad = 100
 text_hlad_cislo = "100"
@@ -74,6 +78,7 @@ counter_zabava = 100
 text_zabava_cislo = "100"
 zabava_text = font.render("zábava", True, (0,0,0))
 
+#deathscreen 
 death = ""
 
 #odpad
@@ -139,7 +144,6 @@ class Button():
         self.lastClickTime = 0
         self.alreadyPressed = False
         self.aktivni = True
-        
 
         self.fillColors = {
             'normal': "#ffffff",
@@ -154,7 +158,7 @@ class Button():
         objects.append(self)
 
     #animace tlačítka 
-    def process(self):       
+    def process(self):
         if self.aktivni:
             mousePos = pygame.mouse.get_pos()
             currentTime = pygame.time.get_ticks()
@@ -176,7 +180,7 @@ class Button():
                             self.alreadyPressed = False
                     else:
                         self.alreadyPressed = False
-    
+
             self.buttonSurf = font_button.render(self.buttonText, True, (20,20,20))
             self.buttonSurface.blit(self.buttonSurf, [
                 self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2,
@@ -215,14 +219,18 @@ def stop():
 #zabava
 def zabava():
     global counter_zabava
+    global interakce
+    interakce = random.choice(reakce)
     if counter_zabava < 99:
         counter_zabava += 2
+
 
 #tlačítka 
 hlad_tlacitko = Button(55, 80, 80, 30, "Hlad", jidlo, cooldown = 1000)
 voda_tlacitko = Button(160, 80, 80, 30, "Voda", voda, cooldown = 1000)
 uklidit_tlacitko = Button(30, 285, 120, 30, "Uklidit", uklidit, cooldown = 1000)
 minihry_tlacitko = Button(160, 285, 120, 30, "MINIHRY", stop, cooldown = 1000)
+
 
 run = True
 while run:
@@ -282,6 +290,7 @@ while run:
                             break
 
                 #reakce 
+
                 if not kliknuti_odpad:
                         for sprite in vsichni_spritove.sprites()[:: -1]:
                             if sprite.rect.collidepoint(action.pos):
@@ -294,11 +303,13 @@ while run:
         death = "zadušen odpadem"
 
     if not Minihry:
-        #obrazek bobku
+    #interakce
+        obrazovka.blit(font_reakce.render(interakce, True,(0,0,0)), (200,150))
+    #obrazek bobku
         for odpad, odpad_rect in odpadky:
             obrazovka.blit(odpad, odpad_rect)
 
-        #update animace
+    #update animace
         vsichni_spritove.update()
         vsichni_spritove.draw(obrazovka)
 
