@@ -1,0 +1,328 @@
+#knihovny
+import pygame 
+import os
+import sys
+import random
+
+#obrazovka
+pygame.init()
+obrazovka = pygame.display.set_mode((300,420))
+
+#čas
+cas = pygame.time.Clock()
+pygame.time.set_timer(pygame.USEREVENT, 1000)
+play_time = 0
+
+#fonty
+font = pygame.font.SysFont("Consolas", 20)
+font_button = pygame.font.SysFont("Consolas", 30)
+
+#Načítání obrázků 
+CESTA_K_KODU = os.path.dirname(os.path.abspath(__file__))
+Slozka_s_obrazky_staty = os.path.join(CESTA_K_KODU, "obrazky_staty")
+Slozka_s_obrazky_mazlicek = os.path.join(CESTA_K_KODU, "obrazky_mazliček")
+
+#jídlo
+hunger_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger1.png")).convert_alpha(), (40,40))
+hunger_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger2.png")).convert_alpha(), (40,40))
+hunger_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger3.png")).convert_alpha(), (40,40))
+hunger_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger4.png")).convert_alpha(), (40,40))
+hunger_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger5.png")).convert_alpha(), (40,40))
+hunger_stav = [hunger_stav_5, hunger_stav_4, hunger_stav_3, hunger_stav_2, hunger_stav_1]
+
+#voda
+voda_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water1.png")).convert_alpha(), (40,40))
+voda_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water2.png")).convert_alpha(), (40,40))
+voda_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water3.png")).convert_alpha(), (40,40))
+voda_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water4.png")).convert_alpha(), (40,40))
+voda_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water5.png")).convert_alpha(), (40,40))
+voda_stav = [voda_stav_5, voda_stav_4, voda_stav_3, voda_stav_2, voda_stav_1]
+
+#odpadky
+odpad_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt1.png")).convert_alpha(), (40,40))
+odpad_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt2.png")).convert_alpha(), (40,40))
+odpad_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt3.png")).convert_alpha(), (40,40))
+odpad_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt4.png")).convert_alpha(), (40,40))
+odpad_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt5.png")).convert_alpha(), (40,40))
+spina_stav = [odpad_stav_1, odpad_stav_2, odpad_stav_3, odpad_stav_4, odpad_stav_5]
+
+#zábava
+zabava_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy1.png")).convert_alpha(), (40,40))
+zabava_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy2.png")).convert_alpha(), (40,40))
+zabava_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy3.png")).convert_alpha(), (40,40))
+zabava_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy4.png")).convert_alpha(), (40,40))
+zabava_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy5.png")).convert_alpha(), (40,40))
+zabava_stav = [zabava_stav_5, zabava_stav_4, zabava_stav_3, zabava_stav_2, zabava_stav_1]
+
+#bobek
+bobek_obrazek = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "bobek.png")).convert_alpha(), (20,20))
+
+#staty
+counter_hlad = 100
+text_hlad_cislo = "100"
+hlad_text = font.render("jídlo", True, (0,0,0))
+
+counter_voda = 100
+text_voda_cislo = "100"
+voda_text = font.render("voda", True, (0,0,0))
+
+counter_spina = 0
+text_spina_cislo = "0"
+spina_text = font.render("špína", True, (0,0,0))
+
+counter_zabava = 100
+text_zabava_cislo = "100"
+zabava_text = font.render("zábava", True, (0,0,0))
+
+
+#odpad
+odpadky = []
+def pridat_odpad(pocet = 3):
+    global novy_odpad
+    for odd in range (pocet):
+        x = random.choice([random.randint(0, 70), random.randint(200, 250)])
+        y = random.randint(180,250)
+        bobek = bobek_obrazek.get_rect(topleft = (x,y))
+        odpadky.append((bobek_obrazek, bobek))
+
+#mazlíček
+class mazlicek(pygame.sprite.Sprite):
+    def __init__(self, obrazky):
+        super().__init__()
+    
+        obrazek_mazlicek = os.path.join(Slozka_s_obrazky_mazlicek, obrazky)
+        cely_obrazek = pygame.image.load(obrazek_mazlicek).convert_alpha()
+        
+        sirka_obrazku = cely_obrazek.get_width()
+        vyska_obrazku = cely_obrazek.get_height()
+        
+        pocet_snimku = 10
+        self.sirka_snimku = sirka_obrazku // pocet_snimku
+        self.vyska_snimku = vyska_obrazku
+        
+        self.snimky = []
+        for i in range(pocet_snimku):
+            x_pozice = i * self.sirka_snimku
+            
+            oblast = pygame.Rect(x_pozice, 0, self.sirka_snimku, self.vyska_snimku)
+            snimek = cely_obrazek.subsurface(oblast)
+            snimek = pygame.transform.scale(snimek, (self.sirka_snimku * 5, self.vyska_snimku * 5))
+            self.snimky.append(snimek)
+            
+        self.aktualni_snimek = 0
+        self.image = self.snimky[self.aktualni_snimek]
+        self.rect = self.image.get_rect(center=(165, 190))
+        self.rychlost_animace = 0.20
+        
+    def update(self):
+        self.aktualni_snimek += self.rychlost_animace
+        if self.aktualni_snimek >= len(self.snimky):
+            self.aktualni_snimek = 0
+        self.image = self.snimky[int(self.aktualni_snimek)]
+
+#přidávání mazlíčků
+vsichni_spritove = pygame.sprite.Group()
+kocka = mazlicek("kocka.png")
+vsichni_spritove.add(kocka)
+
+#tlačítko
+objects = []
+class Button():
+    def __init__(self, x, y, width, height, buttonText='Button', onclickFunction=None, cooldown = 0):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.onclickFunction = onclickFunction
+        self.cooldown = cooldown
+        self.lastClickTime = 0
+        self.alreadyPressed = False
+        self.aktivni = True
+        
+
+        self.fillColors = {
+            'normal': "#ffffff",
+            'hover': '#666666',
+            'pressed': '#333333',
+            'cooldown': "#fd0303"
+        }
+        
+        self.buttonSurface = pygame.Surface((self.width, self.height))
+        self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.buttonText = buttonText
+        objects.append(self)
+
+    #animace tlačítka 
+    def process(self):
+        mousePos = pygame.mouse.get_pos()
+        currentTime = pygame.time.get_ticks()
+        isOnCooldown = (currentTime - self.lastClickTime) < self.cooldown
+        if isOnCooldown:
+            self.buttonSurface.fill(self.fillColors['cooldown'])
+        else:
+            self.buttonSurface.fill(self.fillColors['normal'])
+            if self.buttonRect.collidepoint(mousePos):
+                self.buttonSurface.fill(self.fillColors['hover'])
+                if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                    self.buttonSurface.fill(self.fillColors['pressed'])
+                    if not self.alreadyPressed:
+                        if self.onclickFunction:
+                            self.onclickFunction()
+                        self.alreadyPressed = True
+                        self.lastClickTime = currentTime
+                    else:
+                        self.alreadyPressed = False
+                else:
+                    self.alreadyPressed = False
+
+        self.buttonSurf = font_button.render(self.buttonText, True, (20,20,20))
+        self.buttonSurface.blit(self.buttonSurf, [
+            self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2,
+            self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2
+        ])
+        obrazovka.blit(self.buttonSurface, self.buttonRect)
+
+#jidlo
+def jidlo():
+    global counter_hlad
+    counter_hlad += 10
+    pridat_odpad()
+
+#voda
+def voda():
+    global counter_voda
+    counter_voda += 10
+
+#špína
+def spina():
+    global counter_spina 
+    if counter_spina > 30 and counter_spina < 100:
+        counter_spina -= 30
+    elif counter_spina <= 30:
+        counter_spina = 0
+            
+#STOP
+Minihry = False
+def stop():
+    global Minihry
+    Minihry = not Minihry
+
+#tlačítka 
+Button(55, 80, 80, 30, "Hlad", jidlo, cooldown = 1000)
+Button(160, 80, 80, 30, "Voda", voda, cooldown = 1000)
+Button(30, 285, 120, 30, "Uklidit", spina, cooldown = 1000)
+Button(160, 285, 120, 30, "MINIHRY", stop, cooldown = 1000)
+
+run = True
+while run:
+    obrazovka.fill ((255,255,255))
+    for action in pygame.event.get():
+        if action.type == pygame.QUIT:
+            run = False
+
+    #hlavní hra
+        elif not Minihry:
+            if action.type == pygame.USEREVENT:
+                if random.randint(1,50) == 1:
+                    pridat_odpad()
+                
+                counter_hlad -=1
+                text_hlad_cislo = str(counter_hlad)
+                if counter_hlad <= 0:
+                    text_hlad_cislo = "umřel"
+                    run = False
+                if counter_hlad > 100:
+                    text_hlad_cislo = "překrmen"
+                    run = False
+                
+                counter_voda -=1
+                text_voda_cislo = str(counter_voda)
+                if counter_voda <= 0:
+                    text_voda_cislo = "umřel"
+                    run = False
+                if counter_voda > 100:
+                    text_voda_cislo = "prasknul"
+                    run = False
+
+                counter_spina += 1
+                if counter_spina > 100:
+                    run = False
+
+                counter_zabava -= 1
+                text_zabava_cislo = str(counter_zabava)
+                if counter_zabava < 0:
+                    run = False
+
+            #odpad
+                text_spina_cislo = str(counter_spina)
+            elif action.type == pygame.MOUSEBUTTONDOWN:
+                if action.button == 1:
+                    for odpad, odpad_rect in odpadky[::-1]:
+                        if odpad_rect.collidepoint(action.pos):
+                            counter_spina += 10                      
+                            odpadky.remove((odpad, odpad_rect))
+                            break
+
+            #reakce 
+            elif action.type == pygame.MOUSEBUTTONDOWN:
+                if action.button == 1:
+                    for sprite in vsichni_spritove.sprites()[:: -1]:
+                        if sprite.rect.collidepoint(action.pos):
+                            counter_zabava += 1
+                            break
+
+    if len(odpadky) > 10:
+        print ("moc odpadků")
+        run = False
+
+
+    if not Minihry:
+        #obrazek bobku
+        for odpad, odpad_rect in odpadky:
+            obrazovka.blit(odpad, odpad_rect)
+
+        #update animace
+        vsichni_spritove.update()
+        vsichni_spritove.draw(obrazovka)
+
+    #statistika hladu, obrázek hladu
+        index_hlad = min(counter_hlad // 20, 4)
+        obrazovka.blit(hunger_stav[index_hlad], (80,0))
+
+    #statistika vody, obrázek vody        
+        index_voda = min(counter_voda // 20, 4)
+        obrazovka.blit(voda_stav[index_voda], (180,0))
+
+    #statistika špíny, obrázek špíny
+        index_spina = min(counter_spina // 20, 4)
+        obrazovka.blit(spina_stav[index_spina], (72, 355))
+
+    #statistika zábavy, obrázek zábavy
+        index_zabava = min(counter_zabava // 20, 4)
+        obrazovka.blit(zabava_stav[index_zabava], (180, 355))
+
+    #text čísla pro vodu, jídlo, špína 
+        obrazovka.blit(font.render(text_hlad_cislo, True,(0,0,0)), (85,60))
+        obrazovka.blit(font.render(text_voda_cislo, True,(0,0,0)), (185,60))
+        obrazovka.blit(font.render(text_spina_cislo, True,(0,0,0)), (80,315))
+        obrazovka.blit(font.render(text_zabava_cislo, True,(0,0,0)), (190,315))
+        
+    #text jídla, vody, špíny 
+        obrazovka.blit(hlad_text, (75,40))
+        obrazovka.blit(voda_text, (175,40))
+        obrazovka.blit(spina_text,(62,335))
+        obrazovka.blit(zabava_text,(175,335))
+
+    #minihry
+
+    #update tlačítka 
+    for object in objects:
+        object.process()
+
+    #nastaveni
+    pygame.display.flip()
+    cas.tick(60)
+    pygame.display.set_caption(f"Tamogatchi | FPS: {int(cas.get_fps())}")
+
+pygame.quit()
+sys.exit() 
