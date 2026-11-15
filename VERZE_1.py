@@ -85,11 +85,21 @@ death = ""
 odpadky = []
 def pridat_odpad(pocet = 3):
     global novy_odpad
-    for odd in range (pocet):
+    for odp in range (pocet):
         x = random.choice([random.randint(0, 70), random.randint(200, 250)])
-        y = random.randint(180,250)
+        y = random.randint(130,250)
         bobek = bobek_obrazek.get_rect(topleft = (x,y))
         odpadky.append((bobek_obrazek, bobek))
+
+#interakce
+interakce_list = []
+def interakce_kocka():
+    interakce = random.choice(reakce)
+    x_reakce = random.choice([random.randint(0, 60), random.randint(200, 220)])
+    y_reakce = random.randint(130,250)
+    odpoved_kocky = font_reakce.render(interakce, True,(0,0,0))
+    interakce_list.append((odpoved_kocky, (x_reakce, y_reakce)))
+
 
 #mazlíček
 class mazlicek(pygame.sprite.Sprite):
@@ -219,8 +229,6 @@ def stop():
 #zabava
 def zabava():
     global counter_zabava
-    global interakce
-    interakce = random.choice(reakce)
     if counter_zabava < 99:
         counter_zabava += 2
 
@@ -230,7 +238,6 @@ hlad_tlacitko = Button(55, 80, 80, 30, "Hlad", jidlo, cooldown = 1000)
 voda_tlacitko = Button(160, 80, 80, 30, "Voda", voda, cooldown = 1000)
 uklidit_tlacitko = Button(30, 285, 120, 30, "Uklidit", uklidit, cooldown = 1000)
 minihry_tlacitko = Button(160, 285, 120, 30, "MINIHRY", stop, cooldown = 1000)
-
 
 run = True
 while run:
@@ -289,12 +296,12 @@ while run:
                             odpadky.remove((odpad, odpad_rect))
                             break
 
-                #reakce 
-
+                #přidání zábavy 
                 if not kliknuti_odpad:
                         for sprite in vsichni_spritove.sprites()[:: -1]:
                             if sprite.rect.collidepoint(action.pos):
                                 zabava()
+                                interakce_kocka()
                                 break
 
     if len(odpadky) > 10:
@@ -303,12 +310,15 @@ while run:
         death = "zadušen odpadem"
 
     if not Minihry:
-    #interakce
-        obrazovka.blit(font_reakce.render(interakce, True,(0,0,0)), (200,150))
+        play_time += 1
+    #reakce kocky
+        for odpoved_kocky, pos in interakce_list:
+            obrazovka.blit(odpoved_kocky, pos)    
+  
     #obrazek bobku
         for odpad, odpad_rect in odpadky:
             obrazovka.blit(odpad, odpad_rect)
-
+        
     #update animace
         vsichni_spritove.update()
         vsichni_spritove.draw(obrazovka)
