@@ -8,12 +8,12 @@ import random
 pygame.init()
 obrazovka = pygame.display.set_mode((300,420))
 
-#čas
+#Čas hry
 cas = pygame.time.Clock()
-pygame.time.set_timer(pygame.USEREVENT, 1000)
+pygame.time.set_timer(pygame.USEREVENT, 1000) #rychlost hry
 play_time = 0
 
-#fonty
+#Fonty
 font = pygame.font.SysFont("Consolas", 20)
 font_button = pygame.font.SysFont("Consolas", 30)
 font_reakce = pygame.font.SysFont("Consolas", 15)
@@ -23,7 +23,7 @@ CESTA_K_KODU = os.path.dirname(os.path.abspath(__file__))
 Slozka_s_obrazky_staty = os.path.join(CESTA_K_KODU, "obrazky_staty")
 Slozka_s_obrazky_mazlicek = os.path.join(CESTA_K_KODU, "obrazky_mazliček")
 
-#jídlo
+#Načítání obrázků pro jídlo 
 hunger_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger1.png")).convert_alpha(), (40,40))
 hunger_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger2.png")).convert_alpha(), (40,40))
 hunger_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger3.png")).convert_alpha(), (40,40))
@@ -31,7 +31,7 @@ hunger_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_o
 hunger_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger5.png")).convert_alpha(), (40,40))
 hunger_stav = [hunger_stav_5, hunger_stav_4, hunger_stav_3, hunger_stav_2, hunger_stav_1]
 
-#voda
+#Načítání obrázků pro vodu
 voda_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water1.png")).convert_alpha(), (40,40))
 voda_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water2.png")).convert_alpha(), (40,40))
 voda_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water3.png")).convert_alpha(), (40,40))
@@ -39,7 +39,7 @@ voda_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obr
 voda_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water5.png")).convert_alpha(), (40,40))
 voda_stav = [voda_stav_5, voda_stav_4, voda_stav_3, voda_stav_2, voda_stav_1]
 
-#odpadky
+#Načítání obrázků pro odpadky
 odpad_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt1.png")).convert_alpha(), (40,40))
 odpad_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt2.png")).convert_alpha(), (40,40))
 odpad_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt3.png")).convert_alpha(), (40,40))
@@ -47,7 +47,7 @@ odpad_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_ob
 odpad_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt5.png")).convert_alpha(), (40,40))
 spina_stav = [odpad_stav_1, odpad_stav_2, odpad_stav_3, odpad_stav_4, odpad_stav_5]
 
-#zábava
+#Načítání obrázků pro zábavu 
 zabava_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy1.png")).convert_alpha(), (40,40))
 zabava_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy2.png")).convert_alpha(), (40,40))
 zabava_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy3.png")).convert_alpha(), (40,40))
@@ -55,13 +55,14 @@ zabava_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_o
 zabava_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy5.png")).convert_alpha(), (40,40))
 zabava_stav = [zabava_stav_5, zabava_stav_4, zabava_stav_3, zabava_stav_2, zabava_stav_1]
 
-#bobek
+#Načítání obrázků pro bobek
 bobek_obrazek = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "bobek.png")).convert_alpha(), (20,20))
 
-#interakce 
+#Odpovědi mazlíčka po interakci 
 interakce = ""
 reakce = ["ahoj :3", "error 404", "meow meow", "kňááá", "HUH?", "mám hlad"]
-#staty
+
+#Staty mazlíčka 
 counter_hlad = 100
 text_hlad_cislo = "100"
 hlad_text = font.render("jídlo", True, (0,0,0))
@@ -78,10 +79,10 @@ counter_zabava = 100
 text_zabava_cislo = "100"
 zabava_text = font.render("zábava", True, (0,0,0))
 
-#deathscreen 
+#Deathscreen 
 death = ""
 
-#odpad
+#Přidání odpadků
 odpadky = []
 def pridat_odpad(pocet = 3):
     global novy_odpad
@@ -91,7 +92,7 @@ def pridat_odpad(pocet = 3):
         bobek = bobek_obrazek.get_rect(topleft = (x,y))
         odpadky.append((bobek_obrazek, bobek))
 
-#interakce
+#Interakce s mazlíčkem 
 interakce_list = []
 def interakce_kocka():
     interakce = random.choice(reakce)
@@ -101,7 +102,7 @@ def interakce_kocka():
     interakce_list.append((odpoved_kocky, (x_reakce, y_reakce)))
 
 
-#mazlíček
+#Animace mazlíčka
 class mazlicek(pygame.sprite.Sprite):
     def __init__(self, obrazky):
         super().__init__()
@@ -136,12 +137,12 @@ class mazlicek(pygame.sprite.Sprite):
             self.aktualni_snimek = 0
         self.image = self.snimky[int(self.aktualni_snimek)]
 
-#přidávání mazlíčků
+#Přidání obrázků mazlíčka 
 vsichni_spritove = pygame.sprite.Group()
 kocka = mazlicek("kocka.png")
 vsichni_spritove.add(kocka)
 
-#tlačítko
+#Specifika Tlačítka 
 objects = []
 class Button():
     def __init__(self, x, y, width, height, buttonText='Button', onclickFunction=None, cooldown = 0):
@@ -167,7 +168,7 @@ class Button():
         self.buttonText = buttonText
         objects.append(self)
 
-    #animace tlačítka 
+    #Animace tlačítka 
     def process(self):
         if self.aktivni:
             mousePos = pygame.mouse.get_pos()
@@ -198,18 +199,18 @@ class Button():
             ])
             obrazovka.blit(self.buttonSurface, self.buttonRect)
 
-#jidlo
+#Přidání jidla
 def jidlo():
     global counter_hlad
     counter_hlad += 10
     pridat_odpad()
 
-#voda
+#Přidání vody 
 def voda():
     global counter_voda
     counter_voda += 10
 
-#špína
+#Uklizení 
 def uklidit():
     global counter_spina 
     if counter_spina > 30 and counter_spina < 100:
@@ -217,7 +218,7 @@ def uklidit():
     elif counter_spina <= 30:
         counter_spina = 0
             
-#STOP
+#Přepnutí na minihry
 Minihry = False
 def stop():
     global Minihry
@@ -226,18 +227,21 @@ def stop():
     voda_tlacitko.aktivni = not voda_tlacitko.aktivni
     uklidit_tlacitko.aktivni = not uklidit_tlacitko.aktivni
 
-#zabava
+#Přidání zábavy
 def zabava():
     global counter_zabava
     if counter_zabava < 99:
         counter_zabava += 2
 
 
-#tlačítka 
+#Tlačítka pro interakci se staty mazlíčka 
 hlad_tlacitko = Button(55, 80, 80, 30, "Hlad", jidlo, cooldown = 1000)
 voda_tlacitko = Button(160, 80, 80, 30, "Voda", voda, cooldown = 1000)
 uklidit_tlacitko = Button(30, 285, 120, 30, "Uklidit", uklidit, cooldown = 1000)
+
+#Tlačítko pro přepnutí na minihry
 minihry_tlacitko = Button(160, 285, 120, 30, "MINIHRY", stop, cooldown = 1000)
+
 
 run = True
 while run:
@@ -246,7 +250,7 @@ while run:
         if action.type == pygame.QUIT:
             run = False
 
-    #hlavní hra
+    #Obrazovka s mazlíčkem 
         elif not Minihry:
             if action.type == pygame.USEREVENT:
                 if random.randint(1,50) == 1:
@@ -285,7 +289,7 @@ while run:
                     run = False
                     death = "unuděn k smrti"
 
-            #odpad
+            #Interakce s bobkem
                 text_spina_cislo = str(counter_spina)
             elif action.type == pygame.MOUSEBUTTONDOWN:
                 if action.button == 1:
@@ -296,14 +300,14 @@ while run:
                             odpadky.remove((odpad, odpad_rect))
                             break
 
-                #přidání zábavy 
+                #Interakce s mazlíčkem 
                 if not kliknuti_odpad:
                         for sprite in vsichni_spritove.sprites()[:: -1]:
                             if sprite.rect.collidepoint(action.pos):
                                 zabava()
                                 interakce_kocka()
                                 break
-
+#limit bobků na obrazovce 
     if len(odpadky) > 10:
         print ("moc odpadků")
         run = False
@@ -311,41 +315,42 @@ while run:
 
     if not Minihry:
         play_time += 1
-    #reakce kocky
+    #Reakce mazlíčka po kliknutí 
         for odpoved_kocky, pos in interakce_list:
             obrazovka.blit(odpoved_kocky, pos)    
   
-    #obrazek bobku
+    #Tvoření bobků na obrazovce 
         for odpad, odpad_rect in odpadky:
             obrazovka.blit(odpad, odpad_rect)
         
-    #update animace
+    #Tvoření animace mazlíčka 
         vsichni_spritove.update()
         vsichni_spritove.draw(obrazovka)
 
-    #statistika hladu, obrázek hladu
+    #Měnění obrázků dle množství statu
+        #hlad
         index_hlad = min(counter_hlad // 20, 4)
         obrazovka.blit(hunger_stav[index_hlad], (80,0))
 
-    #statistika vody, obrázek vody        
+        #žízeň
         index_voda = min(counter_voda // 20, 4)
         obrazovka.blit(voda_stav[index_voda], (180,0))
 
-    #statistika špíny, obrázek špíny
+        #špína
         index_spina = min(counter_spina // 20, 4)
         obrazovka.blit(spina_stav[index_spina], (72, 355))
 
-    #statistika zábavy, obrázek zábavy
+        #zábava
         index_zabava = min(counter_zabava // 20, 4)
         obrazovka.blit(zabava_stav[index_zabava], (180, 355))
 
-    #text čísla pro vodu, jídlo, špína 
+    #text čísla pro jídlo, vodu, špínu, zábavu
         obrazovka.blit(font.render(text_hlad_cislo, True,(0,0,0)), (85,60))
         obrazovka.blit(font.render(text_voda_cislo, True,(0,0,0)), (185,60))
         obrazovka.blit(font.render(text_spina_cislo, True,(0,0,0)), (80,315))
         obrazovka.blit(font.render(text_zabava_cislo, True,(0,0,0)), (190,315))
         
-    #text jídla, vody, špíny 
+    #text jídla, vody, špíny, zábavy 
         obrazovka.blit(hlad_text, (75,40))
         obrazovka.blit(voda_text, (175,40))
         obrazovka.blit(spina_text,(62,335))
@@ -354,16 +359,16 @@ while run:
     if Minihry:
         obrazovka.fill((255,255,255))
 
-    #update tlačítka 
+    #Aktivace tlačítka 
     for object in objects:
         object.process()
-
-    #nastaveni
+        
+#Obecné nastavení hry
     pygame.display.flip()
     cas.tick(60)
     pygame.display.set_caption(f"Tamogatchi | FPS: {int(cas.get_fps())}")
 
-#deathscreen
+#Deathscreen
 if death != "":
     obrazovka.fill((255,20,20))
     obrazovka.blit(font.render("MAZLÍK UMŘEL", True,(0,0,0)), (80,50))
