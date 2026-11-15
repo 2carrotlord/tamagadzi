@@ -317,7 +317,9 @@ while run:
         play_time += 1
     #Reakce mazlíčka po kliknutí 
         for odpoved_kocky, pos in interakce_list:
-            obrazovka.blit(odpoved_kocky, pos)    
+            obrazovka.blit(odpoved_kocky, pos) 
+            if len(interakce_list) > 1:
+                interakce_list.pop(0)
   
     #Tvoření bobků na obrazovce 
         for odpad, odpad_rect in odpadky:
