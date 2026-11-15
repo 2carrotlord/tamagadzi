@@ -24,35 +24,35 @@ Slozka_s_obrazky_staty = os.path.join(CESTA_K_KODU, "obrazky_staty")
 Slozka_s_obrazky_mazlicek = os.path.join(CESTA_K_KODU, "obrazky_mazliček")
 
 #Načítání obrázků pro jídlo 
-hunger_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger1.png")).convert_alpha(), (40,40))
-hunger_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger2.png")).convert_alpha(), (40,40))
-hunger_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger3.png")).convert_alpha(), (40,40))
-hunger_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger4.png")).convert_alpha(), (40,40))
-hunger_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger5.png")).convert_alpha(), (40,40))
+hunger_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger1.png")).convert_alpha(), (35,40))
+hunger_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger2.png")).convert_alpha(), (35,40))
+hunger_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger3.png")).convert_alpha(), (35,40))
+hunger_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger4.png")).convert_alpha(), (35,40))
+hunger_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger5.png")).convert_alpha(), (35,40))
 hunger_stav = [hunger_stav_5, hunger_stav_4, hunger_stav_3, hunger_stav_2, hunger_stav_1]
 
 #Načítání obrázků pro vodu
-voda_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water1.png")).convert_alpha(), (40,40))
-voda_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water2.png")).convert_alpha(), (40,40))
-voda_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water3.png")).convert_alpha(), (40,40))
-voda_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water4.png")).convert_alpha(), (40,40))
-voda_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water5.png")).convert_alpha(), (40,40))
+voda_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water1.png")).convert_alpha(), (35,40))
+voda_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water2.png")).convert_alpha(), (35,40))
+voda_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water3.png")).convert_alpha(), (35,40))
+voda_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water4.png")).convert_alpha(), (35,40))
+voda_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "water5.png")).convert_alpha(), (35,40))
 voda_stav = [voda_stav_5, voda_stav_4, voda_stav_3, voda_stav_2, voda_stav_1]
 
 #Načítání obrázků pro odpadky
-odpad_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt1.png")).convert_alpha(), (40,40))
-odpad_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt2.png")).convert_alpha(), (40,40))
-odpad_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt3.png")).convert_alpha(), (40,40))
-odpad_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt4.png")).convert_alpha(), (40,40))
-odpad_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt5.png")).convert_alpha(), (40,40))
+odpad_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt1.png")).convert_alpha(), (35,40))
+odpad_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt2.png")).convert_alpha(), (35,40))
+odpad_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt3.png")).convert_alpha(), (35,40))
+odpad_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt4.png")).convert_alpha(), (35,40))
+odpad_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "dirt5.png")).convert_alpha(), (35,40))
 spina_stav = [odpad_stav_1, odpad_stav_2, odpad_stav_3, odpad_stav_4, odpad_stav_5]
 
 #Načítání obrázků pro zábavu 
-zabava_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy1.png")).convert_alpha(), (40,40))
-zabava_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy2.png")).convert_alpha(), (40,40))
-zabava_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy3.png")).convert_alpha(), (40,40))
-zabava_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy4.png")).convert_alpha(), (40,40))
-zabava_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy5.png")).convert_alpha(), (40,40))
+zabava_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy1.png")).convert_alpha(), (35,40))
+zabava_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy2.png")).convert_alpha(), (35,40))
+zabava_stav_3 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy3.png")).convert_alpha(), (35,40))
+zabava_stav_4 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy4.png")).convert_alpha(), (35,40))
+zabava_stav_5 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "happy5.png")).convert_alpha(), (35,40))
 zabava_stav = [zabava_stav_5, zabava_stav_4, zabava_stav_3, zabava_stav_2, zabava_stav_1]
 
 #Načítání obrázků pro bobek
