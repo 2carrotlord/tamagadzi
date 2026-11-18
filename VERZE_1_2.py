@@ -23,6 +23,9 @@ CESTA_K_KODU = os.path.dirname(os.path.abspath(__file__))
 Slozka_s_obrazky_staty = os.path.join(CESTA_K_KODU, "obrazky_staty")
 Slozka_s_obrazky_mazlicek = os.path.join(CESTA_K_KODU, "obrazky_mazliček")
 
+#zvuky v1
+pygame.mixer.init()
+
 #Načítání obrázků pro jídlo 
 hunger_stav_1 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger1.png")).convert_alpha(), (35,40))
 hunger_stav_2 = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_obrazky_staty, "hunger2.png")).convert_alpha(), (35,40))
@@ -370,15 +373,12 @@ while run:
     cas.tick(60)
     pygame.display.set_caption(f"Tamogatchi | FPS: {int(cas.get_fps())}")
 
-pygame.mixer.init()
-pygame.mixer.music.load("mnau.mp3")
 #Deathscreen
 if death != "":
     obrazovka.fill((255,20,20))
     obrazovka.blit(font.render("MAZLÍK UMŘEL", True,(0,0,0)), (80,50))
     obrazovka.blit(font.render(f"Důvod: {death}", True,(0,0,0)), (15,80))
     pygame.display.flip() 
-    pygame.mixer.music.play()
     pygame.time.wait(3000)
     pygame.mixer.music.pause()
 
