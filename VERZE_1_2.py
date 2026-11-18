@@ -66,7 +66,7 @@ interakce = ""
 reakce = ["ahoj :3", "error 404", "meow meow", "kňááá", "HUH?", "mám hlad"]
 
 #mnoukani
-mnoukani = ["./zvuky/mnau1.mp3", "./zvuky/mnau2.mp3", "./zvuky/mnau3.mp3",]
+mnoukani = ["./zvuky/mnau1.mp3", "./zvuky/mnau2.mp3", "./zvuky/mnau3.mp3", "./zvuky/mnau4.mp3"]
 pocet_interakci = 0
 
 #Staty mazlíčka 
