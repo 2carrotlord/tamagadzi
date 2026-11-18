@@ -65,6 +65,10 @@ bobek_obrazek = pygame.transform.scale(pygame.image.load(os.path.join(Slozka_s_o
 interakce = ""
 reakce = ["ahoj :3", "error 404", "meow meow", "kňááá", "HUH?", "mám hlad"]
 
+#mnoukani
+mnoukani = ["./zvuky/mnau1.mp3", "./zvuky/mnau2.mp3", "./zvuky/mnau3.mp3",]
+pocet_interakci = 0
+
 #Staty mazlíčka 
 counter_hlad = 100
 text_hlad_cislo = "100"
@@ -98,12 +102,19 @@ def pridat_odpad(pocet = 3):
 #Interakce s mazlíčkem 
 interakce_list = []
 def interakce_kocka():
+    global pocet_interakci
+    pocet_interakci += 1
     interakce = random.choice(reakce)
     x_reakce = random.choice([random.randint(0, 60), random.randint(200, 220)])
     y_reakce = random.randint(130,250)
     odpoved_kocky = font_reakce.render(interakce, True,(0,0,0))
     interakce_list.append((odpoved_kocky, (x_reakce, y_reakce)))
-
+    if pocet_interakci > 1:
+        pygame.mixer.music.unload()
+    mnouk = random.choice(mnoukani)
+    print(mnouk)
+    pygame.mixer.music.load(mnouk)
+    pygame.mixer.music.play()
 
 #Animace mazlíčka
 class mazlicek(pygame.sprite.Sprite):
