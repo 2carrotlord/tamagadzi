@@ -234,11 +234,19 @@ def uklidit():
 #Přepnutí na minihry
 Minihry = False
 def stop():
+    global popnuty_tlacitko_minihry
     global Minihry
     Minihry = not Minihry
     hlad_tlacitko.aktivni = not hlad_tlacitko.aktivni
     voda_tlacitko.aktivni = not voda_tlacitko.aktivni
     uklidit_tlacitko.aktivni = not uklidit_tlacitko.aktivni
+    if Minihry:
+        obrazovka = pygame.display.set_mode((500,500))
+        popnuty_tlacitko_minihry = tlacitka_list.pop()
+        minihry_tlacitko = Button(200, 450, 120, 30, "MINIHRY", stop, cooldown = 1000)
+    else:
+        obrazovka = pygame.display.set_mode((300,420))
+        tlacitka_list.append(popnuty_tlacitko_minihry)
 
 #Přidání zábavy
 def zabava():
