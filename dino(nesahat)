@@ -1,0 +1,16 @@
+import pygame 
+import random 
+
+pygame.init()
+obrazovka = pygame.display.set_mode((1000,200))
+
+
+kaktus = obrazovka.blit()
+run = True
+while run:
+    obrazovka.fill ((255,255,255))
+    for action in pygame.event.get():
+        pygame.display.flip()
+        if action.type == pygame.QUIT:
+            run = False
+pygame.quit()
