@@ -370,13 +370,17 @@ while run:
     cas.tick(60)
     pygame.display.set_caption(f"Tamogatchi | FPS: {int(cas.get_fps())}")
 
+pygame.mixer.init()
+pygame.mixer.music.load("mnau.mp3")
 #Deathscreen
 if death != "":
     obrazovka.fill((255,20,20))
     obrazovka.blit(font.render("MAZLÍK UMŘEL", True,(0,0,0)), (80,50))
     obrazovka.blit(font.render(f"Důvod: {death}", True,(0,0,0)), (15,80))
     pygame.display.flip() 
+    pygame.mixer.music.play()
     pygame.time.wait(3000)
+    pygame.mixer.music.pause()
 
 pygame.quit()
 sys.exit() 
