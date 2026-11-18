@@ -112,7 +112,6 @@ def interakce_kocka():
     if pocet_interakci > 1:
         pygame.mixer.music.unload()
     mnouk = random.choice(mnoukani)
-    print(mnouk)
     pygame.mixer.music.load(mnouk)
     pygame.mixer.music.play()
 
