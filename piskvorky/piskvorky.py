@@ -3,9 +3,9 @@ running = True
 pygame.init()
 
 #mrizka
-pole = [[0,0,0],
-        [0,0,0],
-        [0,0,0]]
+pole = [0,0,0,    # 1 2 3
+        0,0,0,    # 4 5 6
+        0,0,0]    # 7 8 9
 
 #nacteni onrazku
 o_ikonka = pygame.transform.scale(pygame.image.load("./piskvorky/visual/o.png"), (140, 140))
@@ -25,6 +25,24 @@ pygame.draw.line(obraz, (0,0,0), (50, 320), (450, 320), (5))
 
 pygame.display.flip()
 
+#hra
+def hra():
+    global mys_y, mys_x, volna_mista
+    moje_rada = True
+    volna_mista = True
+    while volna_mista == True:
+        if moje_rada == True:
+            #get intput, if free, place
+            pass
+            if 0 not in pole:
+                volna_mista = False
+            moje_rada = False
+        if volna_mista == True:
+            bot()
+
+def bot():
+    pass    #if 2 in row, place third (to win or block), else choose random
+
 #gameloop
 while running:  
     for event in pygame.event.get():  
@@ -32,7 +50,6 @@ while running:
            running = False
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            #print(pygame.mouse.get_pos())
             mys_x, mys_y = pygame.mouse.get_pos()
             if 30 < mys_x < 480 and 30 < mys_y < 480:
-                print("valid klik")
+                print("valid klik") #convert pos to numbered square
