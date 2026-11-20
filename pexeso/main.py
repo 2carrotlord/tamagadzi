@@ -1,29 +1,31 @@
 import random, pygame, os
 import numpy as np
 
+pygame.font.init()
+
 class PexesoGame():
+    sizeX = 4
+    sizeY = 3
+    spriteX = 64
+    spriteY = 64
+    font_small = pygame.font.SysFont("Consolas", 20)
+    font_large = pygame.font.SysFont("Consolas", 50)
+    strings = {"cz": {"P0": "Hráč 1", "P1": "Hráč 2"}, "en": {"P0": "Player 1", "P1": "Player 2"}}
+    fieldX = sizeX*spriteX
+    fieldY = sizeY*spriteY
     def __init__(self, screen):
-        self.font_small = pygame.font.SysFont("Consolas", 20)
-        self.font_large = pygame.font.SysFont("Consolas", 50)
         self.activePlayer = 0
         self.scores = [0,0]
         self.screen = screen
-        self.xSize = 4
-        self.ySize = 3
-        self.spriteX = 64
-        self.spriteY = 64
-        self.fieldX = self.xSize*self.spriteX
-        self.fieldY = self.ySize*self.spriteY
         self.turned = [()]
         self.lang = "cz"
-        self.strings = {"cz": {"P0": "Hráč 1", "P1": "Hráč 2"}}
-        if self.xSize*self.ySize%2==1:
+        if self.sizeX*self.sizeY%2==1:
             raise Exception
-        self.pairsLeft = int(self.xSize*self.ySize/2)
+        self.pairsLeft = int(self.sizeX*self.sizeY/2)
         self.deck = list(range(1, self.pairsLeft+1))*2
         random.shuffle(self.deck)
         self.deck = np.array(self.deck)
-        self.field = self.deck.reshape(self.xSize, self.ySize)
+        self.field = self.deck.reshape(self.sizeX, self.sizeY)
         self.spritesheet = pygame.image.load(os.path.join(os.path.dirname(os.path.abspath(__file__)), "resource", "spritesheet.png"))
         self.sprites = [pygame.Surface((self.spriteX,self.spriteY)) for _ in range(self.pairsLeft+2)]
         for s, i in zip(self.sprites, range(0, len(self.sprites))): s.blit(self.spritesheet, (0, 0), pygame.Rect(self.spriteX*i, 0, self.spriteX, self.spriteY))
@@ -32,7 +34,7 @@ class PexesoGame():
             return
         x>>=6
         y>>=6
-        if (x,y in self.turned: return
+        if (x,y) in self.turned: return
         if self.turned[0] == ():
             self.turned[0] = (x,y)
         else:
@@ -72,7 +74,7 @@ class PexesoGame():
             pygame.time.wait(1000)
     def draw(self):
         self.screen.fill("white")
-        for x,y in np.ndindex((self.xSize,self.ySize)):
+        for x,y in np.ndindex((self.sizeX,self.sizeY)):
             self.screen.blit(self.sprites[self.field[x,y] if (x,y) in self.turned else 0], (self.spriteX*x, self.spriteY*y))
         self.draw_ui()
         pygame.display.flip()
@@ -91,8 +93,7 @@ class PexesoGame():
 
 # Temporary runner for testing
 pygame.init()
-# TODO: Remove hardcoded values, if possible
-screen = pygame.display.set_mode((256, 192+128))
+screen = pygame.display.set_mode((PexesoGame.fieldX, PexesoGame.fieldY+128))
 pexeso = PexesoGame(screen)
 clock = pygame.time.Clock()
 running = True
