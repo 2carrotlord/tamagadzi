@@ -30,13 +30,15 @@ class PexesoGame():
     def click(self, x, y):
         if y > self.fieldY:
             return
-        if (x>>6,y>>6) in self.turned: return
+        x>>=6
+        y>>=6
+        if (x,y in self.turned: return
         if self.turned[0] == ():
-            self.turned[0] = (x>>6,y>>6)
+            self.turned[0] = (x,y)
         else:
-            if self.turned[0] != (x>>6,y>>6):
+            if self.turned[0] != (x,y):
                 self.activePlayer = not self.activePlayer
-                self.eval_pair(x>>6,y>>6)
+                self.eval_pair(x,y)
     def eval_pair(self,x,y):
         if self.field[self.turned[0]] == self.field[x,y]:
             self.activePlayer = not self.activePlayer
