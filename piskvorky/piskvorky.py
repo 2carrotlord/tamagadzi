@@ -1,6 +1,7 @@
 import pygame
-running = True
+import random
 pygame.init()
+running = True
 
 #mrizka
 pole = [[0,0,0],    # 1 2 3
@@ -29,35 +30,37 @@ pygame.draw.line(obraz, (0,0,0), (50, 320), (450, 320), (5))
 pygame.display.flip()
 
 volna_mista = True
+hrac_na_rade = True
+need_pos = True
 #hra
-'''
-def hra():
-    global mys_y, mys_x, volna_mista, radek, sloupec, klik
-    moje_rada = True
-    klik = False
-    while volna_mista == True:
-        if moje_rada == True:
-            hraluz = False
-            while hraluz == False:
-                #get intput, if free, place
-                if klik == True:
-                    if pole[radek][sloupec] == 0:
-                        hraluz = True
-                    else:
-                        klik = False
-            obraz.blit(o_ikonka, (zacatky[sloupec], zacatky[radek]))
-            pygame.display.flip()
+def hra():      #!!!!add checking for draw (or victory)
+    global hrac_na_rade, need_pos
+    #if my turn, get inupt, check if its valid, make it, check for victory or draw
+    if hrac_na_rade == True:    #pokud hraje hrac
+        if need_pos == False:   #na neco kliknul
+            if pole[radek][sloupec] != 0:       #posral to, potrebuju novy input
+                need_pos = True
+            else:       #je to volne pole
+                pole[radek][sloupec] = 1    #write it in pole
+                obraz.blit(o_ikonka, (zacatky[sloupec], zacatky[radek]))        #show it on screen
+                pygame.display.flip()
+                hrac_na_rade = False
+    else:
+        bot()
 
-            if 0 not in pole:
-                volna_mista = False
-            moje_rada = False
-        if volna_mista == True:
-            bot()
-'''
-def hra():
-    pass
 def bot():
-    pass    #if 2 in row, place third (to win or block), else choose random
+    global bot_radek, bot_sloupec, hrac_na_rade, need_pos
+    #pass    #if 2 in row, place third (to win or block), else choose random
+    bot_radek = random.randint(0, 2)
+    bot_sloupec = random.randint(0,2)
+    while pole[bot_radek][bot_sloupec] != 0:
+        bot_radek = random.randint(0, 2)
+        bot_sloupec = random.randint(0,2)
+    pole[bot_radek][bot_sloupec] = 2
+    obraz.blit(x_ikonka, (zacatky[bot_sloupec], zacatky[bot_radek]))        #show it on screen
+    pygame.display.flip()
+    hrac_na_rade = True
+    need_pos = True
 
 #gameloop
 while running:  
@@ -66,14 +69,9 @@ while running:
            running = False
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if klik == False:
-                mys_x, mys_y = pygame.mouse.get_pos()
-                if 30 < mys_x < 480 and 30 < mys_y < 480:   #get radek a sloupec kliknuti
-                    sloupec = 0 if mys_x < 180 else 1 if mys_x < 320 else 2
-                    radek = 0 if mys_y < 180 else 1 if mys_y < 320 else 2
-                    klik = True
-                    '''
-                    obraz.blit(o_ikonka, (zacatky[sloupec], zacatky[radek]))
-                    pygame.display.flip()
-                '''
+            mys_x, mys_y = pygame.mouse.get_pos()
+            if 30 < mys_x < 480 and 30 < mys_y < 480 and need_pos == True:   #get radek a sloupec kliknuti
+                sloupec = 0 if mys_x < 180 else 1 if mys_x < 320 else 2
+                radek = 0 if mys_y < 180 else 1 if mys_y < 320 else 2
+                need_pos = False
     hra()
