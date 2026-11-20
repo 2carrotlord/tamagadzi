@@ -234,7 +234,13 @@ def uklidit():
             
 #Přepnutí na minihry
 Minihry = False
-
+#
+#
+#
+# Nešahat!!
+#
+#
+#
 def minigame_menu_callback():
     pass
 

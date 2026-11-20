@@ -5,7 +5,13 @@ pygame.font.init()
 class Minigames:
     options = ["pexeso", "Zpět"]
     font = pygame.font.SysFont("Consolas", 20)
-
+#
+#
+#
+# Nešahat!!
+#
+#
+#
 def main(callback):
     screen = pygame.display.set_mode((256, 24*len(Minigames.options)*2))
     screen.fill((255,255,255))
