@@ -3,6 +3,7 @@ import pygame
 import os
 import sys
 import random
+import importlib.util
 
 #obrazovka
 pygame.init()
@@ -233,20 +234,39 @@ def uklidit():
             
 #Přepnutí na minihry
 Minihry = False
+#
+#
+#
+# Nešahat!!
+#
+#
+#
+def minigame_menu_callback():
+    pass
+
 def stop():
-    global popnuty_tlacitko_minihry
     global Minihry
     Minihry = not Minihry
-    hlad_tlacitko.aktivni = not hlad_tlacitko.aktivni
-    voda_tlacitko.aktivni = not voda_tlacitko.aktivni
-    uklidit_tlacitko.aktivni = not uklidit_tlacitko.aktivni
-    if Minihry:
-        obrazovka = pygame.display.set_mode((500,500))
-        popnuty_tlacitko_minihry = tlacitka_list.pop()
-        minihry_tlacitko = Button(200, 450, 120, 30, "MINIHRY", stop, cooldown = 1000)
-    else:
-        obrazovka = pygame.display.set_mode((300,420))
-        tlacitka_list.append(popnuty_tlacitko_minihry)
+    minigame_menu_module_spec = importlib.util.spec_from_file_location("minigame_menu", os.path.join(CESTA_K_KODU, "minigame_menu.py"))
+    minigame_menu_module = importlib.util.module_from_spec(minigame_menu_module_spec)
+    minigame_menu_module_spec.loader.exec_module(minigame_menu_module)
+    minigame_menu_module.main(minigame_menu_callback)
+
+
+# def stop():
+#     global popnuty_tlacitko_minihry
+#     global Minihry
+#     Minihry = not Minihry
+#     hlad_tlacitko.aktivni = not hlad_tlacitko.aktivni
+#     voda_tlacitko.aktivni = not voda_tlacitko.aktivni
+#     uklidit_tlacitko.aktivni = not uklidit_tlacitko.aktivni
+#     if Minihry:
+#         obrazovka = pygame.display.set_mode((500,500))
+#         popnuty_tlacitko_minihry = tlacitka_list.pop()
+#         minihry_tlacitko = Button(200, 450, 120, 30, "MINIHRY", stop, cooldown = 1000)
+#     else:
+#         obrazovka = pygame.display.set_mode((300,420))
+#         tlacitka_list.append(popnuty_tlacitko_minihry)
 
 #Přidání zábavy
 def zabava():
