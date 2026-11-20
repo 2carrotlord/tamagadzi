@@ -30,6 +30,7 @@ class PexesoGame():
     def click(self, x, y):
         if y > self.fieldY:
             return
+        if (x>>6,y>>6) in self.turned: return
         if self.turned[0] == ():
             self.turned[0] = (x>>6,y>>6)
         else:
