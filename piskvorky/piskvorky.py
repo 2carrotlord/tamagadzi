@@ -36,17 +36,18 @@ need_pos = True
 def hra():      #!!!!add checking for draw (or victory)
     global hrac_na_rade, need_pos
     #if my turn, get inupt, check if its valid, make it, check for victory or draw
-    if hrac_na_rade == True:    #pokud hraje hrac
-        if need_pos == False:   #na neco kliknul
-            if pole[radek][sloupec] != 0:       #posral to, potrebuju novy input
-                need_pos = True
-            else:       #je to volne pole
-                pole[radek][sloupec] = 1    #write it in pole
-                obraz.blit(o_ikonka, (zacatky[sloupec], zacatky[radek]))        #show it on screen
-                pygame.display.flip()
-                hrac_na_rade = False
-    else:
-        bot()
+    if any(0 in radek for radek in pole):
+        if hrac_na_rade == True:    #pokud hraje hrac
+            if need_pos == False:   #na neco kliknul
+                if pole[radek][sloupec] != 0:       #posral to, potrebuju novy input
+                    need_pos = True
+                else:       #je to volne pole
+                    pole[radek][sloupec] = 1    #write it in pole
+                    obraz.blit(o_ikonka, (zacatky[sloupec], zacatky[radek]))        #show it on screen
+                    pygame.display.flip()
+                    hrac_na_rade = False
+        else:
+            bot()
 
 def bot():
     global bot_radek, bot_sloupec, hrac_na_rade, need_pos
