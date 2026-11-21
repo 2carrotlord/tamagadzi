@@ -158,7 +158,7 @@ kocka = mazlicek("kocka.png")
 vsichni_spritove.add(kocka)
 
 #Specifika Tlačítka 
-objects = []
+tlacitka_list = []
 class Button():
     def __init__(self, x, y, width, height, buttonText='Button', onclickFunction=None, cooldown = 0):
         self.x = x
@@ -181,7 +181,7 @@ class Button():
         self.buttonSurface = pygame.Surface((self.width, self.height))
         self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.buttonText = buttonText
-        objects.append(self)
+        tlacitka_list.append(self)
 
     #Animace tlačítka 
     def process(self):
@@ -404,8 +404,8 @@ while run:
         obrazovka.fill((255,255,255))
 
     #Aktivace tlačítka 
-    for object in objects:
-        object.process()
+    for tlacitka in tlacitka_list:
+        tlacitka.process()
         
 #Obecné nastavení hry
     pygame.display.flip()
