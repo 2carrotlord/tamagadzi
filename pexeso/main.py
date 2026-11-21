@@ -1,7 +1,6 @@
 import random, pygame, os
 import numpy as np
 
-pygame.font.init()
 
 class PexesoGame():
     sizeX = 4
@@ -15,6 +14,7 @@ class PexesoGame():
     fieldY = sizeY*spriteY
     def __init__(self, screen):
         self.activePlayer = 0
+        self.running = True
         self.scores = [0,0]
         self.screen = screen
         self.turned = [()]
@@ -61,8 +61,8 @@ class PexesoGame():
                     self.draw_ui_p0("W")
                     pygame.display.flip()
                 self.event = pygame.event.wait()
-                pygame.time.wait(500)
-                exit(0)
+                pygame.time.wait(3000)
+                self.running = False
             self.turned.append(self.turned[0])
             self.turned.append((x,y))
             self.turned[0] = ()
@@ -91,22 +91,14 @@ class PexesoGame():
         self.screen.blit(self.font_small.render(self.strings[self.lang]["P1"], True, (0,0,0), (255,0,0) if self.activePlayer else None), (self.fieldX-4-sx, self.fieldY+4))
         self.screen.blit(self.font_large.render(f"{score}", True, (255,0,0), (255,255,255)), (self.fieldX-(4+(sy>>1))-lx, self.fieldY+4+sy))
 
-# Temporary runner for testing
-pygame.init()
-screen = pygame.display.set_mode((PexesoGame.fieldX, PexesoGame.fieldY+128))
-pexeso = PexesoGame(screen)
-clock = pygame.time.Clock()
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    pexeso.draw()
-
-    event = pygame.event.wait()
-    if event.type == pygame.MOUSEBUTTONUP:
-        pexeso.click(*pygame.mouse.get_pos())
-
-    clock.tick(60)
-
-pygame.quit()
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((PexesoGame.fieldX, PexesoGame.fieldY+128))
+    pexeso = PexesoGame(screen)
+    while pexeso.running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit(0)
+            if event.type == pygame.MOUSEBUTTONUP:
+                pexeso.click(*pygame.mouse.get_pos())
+        pexeso.draw()
