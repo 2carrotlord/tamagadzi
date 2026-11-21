@@ -5,9 +5,12 @@ import sys
 import random
 import importlib.util
 
+defaultXSize = 300
+defaultYSize = 420
+
 #obrazovka
 pygame.init()
-obrazovka = pygame.display.set_mode((300,420))
+obrazovka = pygame.display.set_mode((defaultXSize, defaultYSize))
 
 #Čas hry
 cas = pygame.time.Clock()
@@ -235,23 +238,12 @@ def uklidit():
             
 #Přepnutí na minihry
 Minihry = False
-#
-#
-#
-# Nešahat!!
-#
-#
-#
-def minigame_menu_callback():
-    pass
-
 def stop():
-    global Minihry
-    Minihry = not Minihry
     minigame_menu_module_spec = importlib.util.spec_from_file_location("minigame_menu", os.path.join(CESTA_K_KODU, "minigame_menu.py"))
     minigame_menu_module = importlib.util.module_from_spec(minigame_menu_module_spec)
     minigame_menu_module_spec.loader.exec_module(minigame_menu_module)
-    minigame_menu_module.main(minigame_menu_callback)
+    minigame_menu_module.main(CESTA_K_KODU)
+    obrazovka = pygame.display.set_mode((defaultXSize, defaultYSize))
 
 
 # def stop():
@@ -394,14 +386,14 @@ while run:
         obrazovka.blit(font.render(text_spina_cislo, True,(0,0,0)), (80,315))
         obrazovka.blit(font.render(text_zabava_cislo, True,(0,0,0)), (190,315))
         
-    #text jídla, vody, špíny, zábavy 
+    #text jídla, vody, špíny, zábavy
         obrazovka.blit(hlad_text, (75,40))
         obrazovka.blit(voda_text, (175,40))
         obrazovka.blit(spina_text,(62,335))
         obrazovka.blit(zabava_text,(175,335))
-        
-    if Minihry:
-        obrazovka.fill((255,255,255))
+
+    # if Minihry:
+    #     obrazovka.fill((255,255,255))
 
     #Aktivace tlačítka 
     for tlacitka in tlacitka_list:
